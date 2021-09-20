@@ -9,9 +9,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@NamedEntityGraph(name = "author_genre_entity_graph", attributeNodes = {@NamedAttributeNode("author"), @NamedAttributeNode("genre")})
+@NamedEntityGraph(name = "author_genre_comments_entity_graph", attributeNodes = {@NamedAttributeNode("author"), @NamedAttributeNode("genre"), @NamedAttributeNode("comments")})
 @Entity
 @Table(name ="book")
 public class Book {
@@ -23,13 +22,17 @@ public class Book {
     @Column (name = "title")
     private String title;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "genre_id")
     private Genre genre;
+
+    @OneToMany(targetEntity = Comment.class, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    private List<Comment> comments;
 
     public Book(String title, Author author, Genre genre) {
         this.title = title;

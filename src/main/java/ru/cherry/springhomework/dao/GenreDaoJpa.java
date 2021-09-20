@@ -1,6 +1,6 @@
 package ru.cherry.springhomework.dao;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.cherry.springhomework.domain.Genre;
 
 import javax.persistence.EntityManager;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "ConstantConditions", "SqlDialectInspection"})
-@Repository
+@Component
 public class GenreDaoJpa implements GenreDao {
     @PersistenceContext
     private final EntityManager em;
@@ -30,9 +30,7 @@ public class GenreDaoJpa implements GenreDao {
 
     @Override
     public void delete(Genre genre) {
-        em.createQuery("delete from Genre a where a.id = :id")
-                .setParameter("id", genre.getId())
-                .executeUpdate();
+        em.remove(genre);
     }
 
     @Override

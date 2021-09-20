@@ -1,18 +1,17 @@
 package ru.cherry.springhomework.dao;
 
-import org.springframework.stereotype.Repository;
-import ru.cherry.springhomework.domain.Author;
+import org.springframework.stereotype.Component;
 import ru.cherry.springhomework.domain.Book;
-import ru.cherry.springhomework.domain.Genre;
+import ru.cherry.springhomework.domain.Comment;
 
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "ConstantConditions", "SqlDialectInspection"})
-@Repository
+@Component
 public class BookDaoJpa implements BookDao {
 
     @PersistenceContext
@@ -33,9 +32,7 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public void delete(Book book) {
-        em.createQuery("delete from Book b where b.id = :id")
-                .setParameter("id", book.getId())
-                .executeUpdate();
+        em.remove(book);
     }
 
     @Override
@@ -47,7 +44,7 @@ public class BookDaoJpa implements BookDao {
     public List<Book> getByTitle(String title) {
         TypedQuery<Book> query = em.createQuery("select b from Book b where b.title =: title", Book.class);
         query.setParameter("title", title);
-        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_entity_graph"));
+        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_comments_entity_graph"));
         return query.getResultList();
     }
 
@@ -58,14 +55,14 @@ public class BookDaoJpa implements BookDao {
         query.setParameter("title", title);
         query.setParameter("authorId", authorId);
         query.setParameter("genreId", genreId);
-        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_entity_graph"));
+        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_comments_entity_graph"));
         return query.getResultList();
     }
 
     @Override
     public List<Book> getAll() {
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
-        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_entity_graph"));
+        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_comments_entity_graph"));
         return query.getResultList();
     }
 

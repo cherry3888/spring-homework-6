@@ -64,7 +64,6 @@ class BookDaoTest {
 	void deleteBook() {
         Book book = em.find(Book.class, 1L);
 		bookDao.delete(book);
-		em.clear();
         Book book1 = em.find(Book.class, 1L);
 		assertNull(book1);
 	}

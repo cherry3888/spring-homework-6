@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService {
         }
         Genre genre;
         List<Genre> genres = genreDao.getByName(genreName);
-        if (CollectionUtils.isEmpty(authors)) {
+        if (CollectionUtils.isEmpty(genres)) {
             genre = genreDao.save(new Genre(genreName));
         } else {
             genre = genres.get(0);

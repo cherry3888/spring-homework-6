@@ -28,4 +28,12 @@ public class Comment {
 
     @Column(name = "content")
     private String content;
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

@@ -63,7 +63,6 @@ class GenreDaoTest {
 	void deleteGenre() {
 		Genre genre = em.find(Genre.class, 1L);
 		genreDao.delete(genre);
-		em.clear();
 		Genre genre1 = em.find(Genre.class, 1L);
 		assertNull(genre1);
 	}

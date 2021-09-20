@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import ru.cherry.springhomework.domain.Author;
 import ru.cherry.springhomework.domain.Book;
 import ru.cherry.springhomework.domain.Comment;
+import ru.cherry.springhomework.domain.Genre;
 import ru.cherry.springhomework.service.*;
 
 import java.util.List;
@@ -162,27 +163,65 @@ public class ShellUI {
     //Жанры
     @ShellMethod(value = "Get genres", key = {"gag", "get genres"})
     public void getAllGenres() {
-        genreService.getAllGenres();
+        List<Genre> genres = genreService.getAllGenres();
+        if (!CollectionUtils.isEmpty(genres)) {
+            messageService.sendMessage("Жанры:");
+            genres.forEach(genre -> messageService.sendMessage(genre.toString()));
+        } else {
+            messageService.sendMessage("Ничего не найдено.");
+        }
     }
 
     @ShellMethod(value = "Add genre", key = {"ag", "add genre"})
     public void addGenre() {
-        genreService.addGenre();
+        messageService.sendMessage("Введите жанр:");
+        String name = messageService.getMessage();
+        Genre genre = genreService.getGenre(name);
+        if (null == genre) {
+            genreService.addGenre(name);
+            messageService.sendMessage("Автор " + name + " успешно сохранен.");
+        } else {
+            messageService.sendMessage("Такой автор уже существует.");
+        }
     }
 
     @ShellMethod(value = "Get genre", key = {"gg", "get genre"})
     public void getGenre() {
-        genreService.getGenre();
+        messageService.sendMessage("Введите автора:");
+        String name = messageService.getMessage();
+        Genre genre = genreService.getGenre(name);
+        if (null == genre) {
+            messageService.sendMessage("Автор не найден.");
+        } else {
+            messageService.sendMessage(genre.toString());
+        }
     }
 
     @ShellMethod(value = "Edit genre", key = {"eg", "edit genre"})
     public void editGenre() {
-        genreService.editGenre();
+        messageService.sendMessage("Введите идентификатор жанра:");
+        Long id = messageService.getLongMessage();
+        messageService.sendMessage("Введите новое наименование жанра:");
+        String newName = messageService.getMessage();
+
+        Genre genre = new Genre(id, newName);
+        genre = genreService.editGenre(genre);
+        if (null != genre) {
+            messageService.sendMessage("Жанр успешно сохранен.");
+        } else {
+            messageService.sendMessage("Жанр не найден!");
+        }
     }
 
     @ShellMethod(value = "Delete genre", key = {"dg", "delete genre"})
     public void deleteGenre() {
-        genreService.deleteGenre();
+        messageService.sendMessage("Введите идентификатор жанра которого хотите удалить:");
+        Long id = messageService.getLongMessage();
+        if (Boolean.TRUE.equals(genreService.deleteGenre(id))) {
+            messageService.sendMessage("Жанр успешно удален.");
+        } else {
+            messageService.sendMessage("Жанр не найден!");
+        }
     }
 
     @ShellMethod(value = "Add comment", key = {"ac", "add comment"})
@@ -197,18 +236,6 @@ public class ShellUI {
             messageService.sendMessage("Комментарий успешно сохранен.");
         } else {
             messageService.sendMessage("Комментарий не сохранен.");
-        }
-    }
-
-    @ShellMethod(value = "Get comments", key = {"gc", "get comments"})
-    public void getComments() {
-        messageService.sendMessage("Введите идентификатор книги:");
-        Long bookId = messageService.getLongMessage();
-        List<Comment> comments = commentService.getByBookId(bookId);
-        if (!CollectionUtils.isEmpty(comments)) {
-            comments.forEach(comment -> messageService.sendMessage(comment.toString()));
-        } else {
-            messageService.sendMessage("Комментарии не найдены.");
         }
     }
 

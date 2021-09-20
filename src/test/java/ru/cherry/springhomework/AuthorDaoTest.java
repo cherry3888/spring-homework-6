@@ -62,7 +62,6 @@ class AuthorDaoTest {
 	void deleteAuthor() {
 		Author author = em.find(Author.class, 1L);
 		authorDao.delete(author);
-		em.clear();
 		Author author1 = em.find(Author.class, 1L);
 		assertNull(author1);
 	}

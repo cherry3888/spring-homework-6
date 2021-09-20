@@ -1,9 +1,13 @@
 package ru.cherry.springhomework.service;
 
+import ru.cherry.springhomework.domain.Genre;
+
+import java.util.List;
+
 public interface GenreService {
-    void getAllGenres();
-    void addGenre();
-    void getGenre();
-    void editGenre();
-    void deleteGenre();
+    List<Genre> getAllGenres();
+    Genre addGenre(String name);
+    Genre getGenre(String name);
+    Genre editGenre(Genre genre);
+    boolean deleteGenre(Long id);
 }

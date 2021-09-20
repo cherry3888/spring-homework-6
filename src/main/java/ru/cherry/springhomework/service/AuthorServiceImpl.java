@@ -12,14 +12,12 @@ import java.util.Optional;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorDao authorDao;
-    private final MessageService messageService;
 
-    public AuthorServiceImpl(AuthorDao authorDao, MessageService messageService) {
+    public AuthorServiceImpl(AuthorDao authorDao) {
         this.authorDao = authorDao;
-        this.messageService = messageService;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public List<Author> getAllAuthors() {
         return authorDao.getAll();

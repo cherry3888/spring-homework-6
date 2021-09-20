@@ -11,7 +11,7 @@
 	<groupId>ru.cherry</groupId>
 	<artifactId>spring-homework-5</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-homework-5</name>
+	<name>spring-homework-6</name>
 	<description>Spring Homework 4</description>
 	<properties>
 		<java.version>11</java.version>

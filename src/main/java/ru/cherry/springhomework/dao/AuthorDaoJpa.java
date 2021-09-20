@@ -1,5 +1,6 @@
 package ru.cherry.springhomework.dao;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.cherry.springhomework.domain.Author;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "ConstantConditions", "SqlDialectInspection"})
-@Repository
+@Component
 public class AuthorDaoJpa implements AuthorDao {
 
     @PersistenceContext
@@ -31,9 +32,7 @@ public class AuthorDaoJpa implements AuthorDao {
 
     @Override
     public void delete(Author author) {
-        em.createQuery("delete from Author a where a.id = :id")
-                .setParameter("id", author.getId())
-                .executeUpdate();
+        em.remove(author);
     }
 
     @Override

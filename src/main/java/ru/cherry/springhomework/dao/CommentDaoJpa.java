@@ -1,15 +1,14 @@
 package ru.cherry.springhomework.dao;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.cherry.springhomework.domain.Comment;
 
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+@Component
 public class CommentDaoJpa implements CommentDao{
     @PersistenceContext
     private final EntityManager em;

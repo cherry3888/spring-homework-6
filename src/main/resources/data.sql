@@ -16,3 +16,6 @@ INSERT INTO BOOK (title, author_id, genre_id) values ('Записки охотн
 INSERT INTO BOOK (title, author_id, genre_id) values ('Чайка', 3, 4);
 INSERT INTO BOOK (title, author_id, genre_id) values ('Три сестры', 3, 2);
 INSERT INTO BOOK (title, author_id, genre_id) values ('Каштанка', 3, 2);
+
+INSERT INTO COMMENT (book_id, content) values (1, 'Хорошая');
+INSERT INTO COMMENT (book_id, content) values (1, 'Плохая');
