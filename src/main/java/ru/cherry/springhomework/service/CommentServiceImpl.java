@@ -7,6 +7,8 @@ import ru.cherry.springhomework.dao.CommentDao;
 import ru.cherry.springhomework.domain.Book;
 import ru.cherry.springhomework.domain.Comment;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,6 +31,17 @@ public class CommentServiceImpl implements CommentService {
         } else {
             return null;
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Comment> getByBookId(Long id) {
+        Optional<Book> bookO = bookDao.getById(id);
+        List<Comment> comments = new ArrayList<>();
+        if (bookO.isPresent()) {
+            comments = bookO.get().getComments();
+        }
+        return comments;
     }
 
 }

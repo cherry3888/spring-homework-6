@@ -44,7 +44,7 @@ public class BookDaoJpa implements BookDao {
     public List<Book> getByTitle(String title) {
         TypedQuery<Book> query = em.createQuery("select b from Book b where b.title =: title", Book.class);
         query.setParameter("title", title);
-        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_comments_entity_graph"));
+        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_entity_graph"));
         return query.getResultList();
     }
 
@@ -55,14 +55,14 @@ public class BookDaoJpa implements BookDao {
         query.setParameter("title", title);
         query.setParameter("authorId", authorId);
         query.setParameter("genreId", genreId);
-        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_comments_entity_graph"));
+        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_entity_graph"));
         return query.getResultList();
     }
 
     @Override
     public List<Book> getAll() {
         TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
-        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_comments_entity_graph"));
+        query.setHint("javax.persistence.fetchgraph", em.getEntityGraph("author_genre_entity_graph"));
         return query.getResultList();
     }
 

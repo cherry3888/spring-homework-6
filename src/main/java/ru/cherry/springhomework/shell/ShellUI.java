@@ -239,4 +239,16 @@ public class ShellUI {
         }
     }
 
+    @ShellMethod(value = "Get comments", key = {"gc", "get comments"})
+    public void getComments() {
+        messageService.sendMessage("Введите идентификатор книги:");
+        Long bookId = messageService.getLongMessage();
+        List<Comment> comments = commentService.getByBookId(bookId);
+        if (!CollectionUtils.isEmpty(comments)) {
+            comments.forEach(comment -> messageService.sendMessage(comment.toString()));
+        } else {
+            messageService.sendMessage("Комментарии не найдены.");
+        }
+    }
+
 }
